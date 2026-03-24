@@ -142,6 +142,21 @@ export POSTGRES_DB="${DB_NAME}"
 export POSTGRES_PORT="${DB_PORT}"
 EOF
 
+# Apply schema migrations (idempotent)
+MIGRATION_FILE="migrations/001_init_task_planner.sql"
+if [ -f "${MIGRATION_FILE}" ]; then
+    echo ""
+    echo "Applying schema migration: ${MIGRATION_FILE}"
+    # Use the application user so objects are created with the right ownership/privileges.
+    PGPASSWORD="${DB_PASSWORD}" ${PG_BIN}/psql \
+        -h localhost -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME} \
+        -v ON_ERROR_STOP=1 \
+        -f "${MIGRATION_FILE}"
+    echo "✓ Migration applied"
+else
+    echo "⚠ Migration file not found: ${MIGRATION_FILE}"
+fi
+
 echo "PostgreSQL setup complete!"
 echo "Database: ${DB_NAME}"
 echo "User: ${DB_USER}"
