@@ -1,0 +1,4 @@
+{
+    "command": "cd db_visualizer && npm install",
+    "working_directory": "/tmp/kavia/workspace/code-generation/unified-task-planner-243915-243930/postgresql_database"
+}
