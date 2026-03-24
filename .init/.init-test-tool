@@ -1,0 +1,4 @@
+{
+    "command": "psql -h localhost -U appuser -d myapp -p 5000 -c \"SELECT version();\"",
+    "working_directory": "/tmp/kavia/workspace/code-generation/unified-task-planner-243915-243930/postgresql_database"
+}
